@@ -1,16 +1,18 @@
 import { combineReducers } from "redux";
 import counter, { Counter } from "./counter/reducer";
+import questions, { Question } from "./Questions/reducer";
 import { Dispatch as ReduxDispatch } from "redux";
+import { ViewModels } from "../Models/ViewModels";
 
 export interface AppState {
-  counter: Counter;
+  questions: Array<ViewModels.Question>;
 }
 
 export type Dispatch = ReduxDispatch<AppState>;
 
 // Add more
 const appReducer = combineReducers<AppState>({
-  counter
+  questions
 });
 
 // Setup root reducer
