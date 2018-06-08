@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "137398422952",
+    "firebase_url": "https://catalyst-72246.firebaseio.com",
+    "project_id": "catalyst-72246",
+    "storage_bucket": "catalyst-72246.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137398422952:android:3f9d5eb72e5ef1e5",
+        "android_client_info": {
+          "package_name": "com.catalyst.mailejol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137398422952-e6c9bcikpt6am20dsbeiju088b618ist.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "137398422952-e6c9bcikpt6am20dsbeiju088b618ist.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsGVy3BClxDqTU8H1Y2kFX0vmk3NYEoVw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
