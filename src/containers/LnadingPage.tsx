@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import {ReactNativeAD, ADLoginView} from 'react-native-azure-ad';
 
-class LandingPage extends Component<{}, {}> {
+interface ILandingProps{
+  onLoginBtnClick?: Function
+}
+
+class LandingPage extends Component<ILandingProps, any> {
   constructor(props) {
     super(props);
   }
-  o365Login(){}
+
+  
   render() {
     return (
       <View style={styles.container}>
@@ -18,10 +24,10 @@ class LandingPage extends Component<{}, {}> {
         width: 70,
         height: 70,
         }}
-    />
+      />
         <Text style={styles.appName}>MaileJol</Text>
         <Text style={styles.appSlogan}>The Employee Intergration App</Text>
-        <TouchableOpacity style={styles.loginBtn} onPress={()=>{alert("Not yet implemented")}}>
+        <TouchableOpacity style={styles.loginBtn} onPress={this.props.onLoginBtnClick.bind(this)}>
         <Image source={{
             uri:
                 "https://static.applenovinky.cz/wp-content/uploads/2014/03/microsoft-office-2013-100x100.png"

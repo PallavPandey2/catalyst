@@ -19,7 +19,7 @@ import DataService from "../Services/DataService";
 import { ViewModels } from "../Models/ViewModels";
 
 interface IHomeProps {
-  questions: Array<ViewModels.Question>;
+  questions?: Array<ViewModels.Question>;
   navigation? : any;
 }
 
@@ -57,6 +57,8 @@ class Home extends Component<IHomeProps & IHomeDispatchProps, IHomeState> {
     this.setState({
       animating: true
     });
+    debugger;
+    
     DataService.GetQuestions().then(questions => {
       debugger;
       this.setState({
@@ -64,20 +66,6 @@ class Home extends Component<IHomeProps & IHomeDispatchProps, IHomeState> {
         animating: false
       });
     });
-
-    // fetch("https://catalystwebap.azurewebsites.net/api/demo", {
-    //   method: "GET",
-    //   headers: {
-    //       "Content-Type": "application/json"
-    //     }
-    //   })
-    //   .then(response => response.json())
-    //   .then(reponseJson => {
-    //     this.setState({
-    //       UserName: reponseJson
-    //     });
-    //   })
-    //   .catch(error => {});
   }
 
   onNewQuestionAdded = newQuestion =>{
@@ -87,7 +75,8 @@ class Home extends Component<IHomeProps & IHomeDispatchProps, IHomeState> {
   static navigationOptions = {
     title: 'Catalyst',
     headerTintColor: '#fff',
-    headerStyle: { backgroundColor: '#17718a' },
+    headerStyle: { backgroundColor: '#15233a' },
+    headerLeft: null
   };
   render() {
     const { navigate } = this.props.navigation;
@@ -102,8 +91,7 @@ class Home extends Component<IHomeProps & IHomeDispatchProps, IHomeState> {
                 onRefresh={this.onRefresh.bind(this)}
               />
             }
-            style={{ width: "100%" }}
-          >
+            style={{ width: "100%" }}>
             <Questions questions={this.state.Questions} navigation={navigate} />
           </ScrollView>
         )}
@@ -138,7 +126,7 @@ const styles = StyleSheet.create({
   WelcomeText: { fontSize: 24, fontWeight: "bold" },
   addButtonContainer: {
     position: "absolute",
-    top: 10,
+    bottom: 10,
     right: 15,
     borderRadius: 50,
     backgroundColor: "#4f6b51",

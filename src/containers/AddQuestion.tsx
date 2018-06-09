@@ -34,7 +34,7 @@ class AddQuestion extends Component<IAddQuestionProps, IAddQuestionState> {
   componentDidMount() {
   }
   static navigationOptions = {
-    title: 'Add a Question',
+    title: 'Add a Question'
   };
 
   AddNewQuestion(){
