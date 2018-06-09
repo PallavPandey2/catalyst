@@ -13,7 +13,9 @@ import * as CounterActions from "../redux/counter/actions";
 import { connect } from "react-redux";
 import { Dispatch, AppState } from "../redux";
 
-interface IQuestionProps {}
+interface IQuestionProps {
+  name?: string;
+}
 
 interface IQuestionDispatchProps {}
 
@@ -26,7 +28,9 @@ class Question extends Component<IQuestionProps & IQuestionDispatchProps,IQuesti
   }
 
   componentDidMount() {}
-
+  static navigationOptions = {
+    title: 'jdksf',
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -36,7 +40,7 @@ class Question extends Component<IQuestionProps & IQuestionDispatchProps,IQuesti
               This is Question for adhuri si baat baaki h....?????!!!!!!!!1
             </Text>
             <View>
-              <span>Date</span>
+              <Text>Date</Text>
             </View>
           </View>
           <FlatList
@@ -84,13 +88,7 @@ class Question extends Component<IQuestionProps & IQuestionDispatchProps,IQuesti
   }
 }
 
-export default connect<IQuestionProps, IQuestionDispatchProps>(
-  (state: AppState) => ({
-    count: state.counter.count,
-    sometthing: 0
-  }),
-  (dispatch: Dispatch) => ({})
-)(Question);
+export default Question;
 
 const styles = StyleSheet.create({
   question: {},

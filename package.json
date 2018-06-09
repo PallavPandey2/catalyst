@@ -15,6 +15,7 @@
     "react-native": "0.54.0",
     "react-native-action-button": "^2.8.4",
     "react-native-floating-action": "^1.10.1",
+    "react-navigation": "^2.2.5",
     "react-redux": "^5.0.7",
     "redux": "^3.6.0"
   },

@@ -4,7 +4,7 @@ export namespace ViewModels {
     public Title: string;
     public Description: string;
     public Likes: number;
-    public Answers: number;
+    public AnswersCount: number;
     public Tags: string;
     public Mentions: string;
     public Author: string;
@@ -15,7 +15,7 @@ export namespace ViewModels {
       this.Title = args.Title;
       this.Description = args.Description;
       this.Likes = args.Likes;
-      this.Answers = args.Answers;
+      this.AnswersCount = args.AnswersCount;
       this.Tags = args.Tags;
       this.Mentions = args.Mentions;
       this.Author = args.Author;

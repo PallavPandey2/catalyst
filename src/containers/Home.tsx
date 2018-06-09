@@ -5,12 +5,12 @@ import {
   StyleSheet,
   Text,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
+  Button
 } from "react-native";
 import * as QuestionActions from "../redux/Questions/action";
 import { connect } from "react-redux";
 import { Dispatch, AppState } from "../redux";
-import Header from "./Header";
 import Questions from "./Questions";
 import Loader from "./Loader";
 import DataService from "../Services/DataService";
@@ -18,6 +18,7 @@ import { ViewModels } from "../Models/ViewModels";
 
 interface IHomeProps {
   questions: Array<ViewModels.Question>;
+  navigation? : any;
 }
 
 interface IHomeDispatchProps {
@@ -66,16 +67,20 @@ class Home extends Component<IHomeProps & IHomeDispatchProps, IHomeState> {
     //   })
     //   .catch(error => {});
   }
-
+  static navigationOptions = {
+    title: 'Catalyst',
+  };
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Header />
         {this.state.animating && <Loader animating={this.state.animating} />}
         {this.state.Questions.length > 0 && (
-          <Questions questions={this.state.Questions} />
+          <Questions questions={this.state.Questions} navigation={navigate} />
         )}
-        <TouchableOpacity style={styles.addButtonContainer}>
+        <TouchableOpacity style={styles.addButtonContainer} onPress={() =>
+            navigate('NewQuestion', { title: 'NewQuestion' })
+          }>
           <Text style={{ color: "#fff", fontSize: 20 }}>+</Text>
         </TouchableOpacity>
       </View>
@@ -102,7 +107,7 @@ const styles = StyleSheet.create({
   WelcomeText: { fontSize: 24, fontWeight: "bold" },
   addButtonContainer: {
     position: "absolute",
-    bottom: 0,
+    top: 0,
     right: 15,
     borderRadius: 50,
     backgroundColor: "#4f6b51",

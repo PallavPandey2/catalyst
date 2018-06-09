@@ -21,6 +21,7 @@ import { ViewModels } from "../Models/ViewModels";
 
 interface IQuestionsProps {
   questions: Array<ViewModels.Question>;
+  navigation?: any;
 }
 
 interface IQuestionsDispatchProps {}
@@ -51,7 +52,7 @@ class Questions extends Component<IQuestionsProps, IQuestionsState> {
   addQuestion() {}
   render() {
     return (
-      <View style={{ width: "100%", marginTop: 70 }}>
+      <View style={{ width: "100%" }}>
         <ScrollView
           refreshControl={
             <RefreshControl
@@ -80,7 +81,7 @@ class Questions extends Component<IQuestionsProps, IQuestionsState> {
                   }}
                 />
                 <Text style={{ position: "absolute", top: 45, left: 5 }}>
-                  {item.Answers}
+                  {item.AnswersCount}
                 </Text>
                 <Image
                   source={{
@@ -95,7 +96,7 @@ class Questions extends Component<IQuestionsProps, IQuestionsState> {
                     left: 25
                   }}
                 />
-                <TouchableOpacity style={styles.item} key={item.Id}>
+                <TouchableOpacity style={styles.item} key={item.Id} onPress={() => this.props.navigation('Question', { title: 'Question' }) }>
                   <Text style={styles.text}>{item.Title}</Text>
                 </TouchableOpacity>
               </View>

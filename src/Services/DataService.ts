@@ -24,7 +24,7 @@ export class DataService {
                 Title: elem.Title,
                 Description: elem.Description,
                 Likes: elem.Likes,
-                Answers: elem.Answers,
+                AnswersCount: elem.AnswersCount,
                 Tags: elem.Tags,
                 Author: elem.Author,
                 Mentions: elem.Mentions,
