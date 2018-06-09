@@ -6,7 +6,9 @@ import {
   Text,
   ActivityIndicator,
   TouchableOpacity,
-  Button
+  Button,
+  ScrollView,
+  RefreshControl
 } from "react-native";
 import * as QuestionActions from "../redux/Questions/action";
 import { connect } from "react-redux";
@@ -29,6 +31,7 @@ interface IHomeState {
   UserName: string;
   Questions: Array<ViewModels.Question>;
   animating: boolean;
+  refreshing: boolean;
 }
 
 class Home extends Component<IHomeProps & IHomeDispatchProps, IHomeState> {
@@ -37,10 +40,19 @@ class Home extends Component<IHomeProps & IHomeDispatchProps, IHomeState> {
     this.state = {
       UserName: "",
       Questions: [],
-      animating: false
+      animating: false,
+      refreshing: false
     };
   }
-
+  onRefresh() {
+    this.setState({ refreshing: true });
+    DataService.GetQuestions().then(questions => {
+      this.setState({
+        Questions: questions,
+        refreshing: false
+      });
+    });
+  }
   componentDidMount() {
     this.setState({
       animating: true
@@ -67,8 +79,15 @@ class Home extends Component<IHomeProps & IHomeDispatchProps, IHomeState> {
     //   })
     //   .catch(error => {});
   }
+
+  onNewQuestionAdded = newQuestion =>{
+    debugger;
+  }
+
   static navigationOptions = {
     title: 'Catalyst',
+    headerTintColor: '#fff',
+    headerStyle: { backgroundColor: '#17718a' },
   };
   render() {
     const { navigate } = this.props.navigation;
@@ -76,7 +95,17 @@ class Home extends Component<IHomeProps & IHomeDispatchProps, IHomeState> {
       <View style={styles.container}>
         {this.state.animating && <Loader animating={this.state.animating} />}
         {this.state.Questions.length > 0 && (
-          <Questions questions={this.state.Questions} navigation={navigate} />
+          <ScrollView 
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh.bind(this)}
+              />
+            }
+            style={{ width: "100%" }}
+          >
+            <Questions questions={this.state.Questions} navigation={navigate} />
+          </ScrollView>
         )}
         <TouchableOpacity style={styles.addButtonContainer} onPress={() =>
             navigate('NewQuestion', { title: 'NewQuestion' })
@@ -102,15 +131,19 @@ const styles = StyleSheet.create({
     position: "relative",
     alignItems: "center",
     justifyContent: "center",
-    width: "100%"
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#e8eaea",
   },
   WelcomeText: { fontSize: 24, fontWeight: "bold" },
   addButtonContainer: {
     position: "absolute",
-    top: 0,
+    top: 10,
     right: 15,
     borderRadius: 50,
     backgroundColor: "#4f6b51",
-    padding: 15
+    padding: 15,
+    paddingRight: 23,
+    paddingLeft: 23
   }
 });

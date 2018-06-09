@@ -28,42 +28,24 @@ interface IQuestionsDispatchProps {}
 
 interface IQuestionsState {
   Questions: Array<ViewModels.Question>;
-  refreshing: boolean;
 }
 
 class Questions extends Component<IQuestionsProps, IQuestionsState> {
   constructor(props: IQuestionsProps) {
     super(props);
-    debugger;
     this.state = {
       Questions: props.questions,
-      refreshing: false
     };
   }
-  onRefresh() {
-    this.setState({ refreshing: true });
-    DataService.GetQuestions().then(questions => {
-      this.setState({
-        Questions: questions,
-        refreshing: false
-      });
-    });
-  }
+  
   addQuestion() {}
   render() {
     return (
       <View style={{ width: "100%" }}>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh.bind(this)}
-            />
-          }
-        >
+        <ScrollView>
           {this.state.Questions.map(
             (item: ViewModels.Question, index: number) => (
-              <View style={{ position: "relative" }}>
+              <View style={ styles.questionContainer} key={index}>
                 <Text style={{ position: "absolute", top: 15, left: 5 }}>
                   {item.Likes}
                 </Text>
@@ -96,7 +78,7 @@ class Questions extends Component<IQuestionsProps, IQuestionsState> {
                     left: 25
                   }}
                 />
-                <TouchableOpacity style={styles.item} key={item.Id} onPress={() => this.props.navigation('Question', { title: 'Question' }) }>
+                <TouchableOpacity style={styles.item} key={item.Id} onPress={() => this.props.navigation('Question', { title: item.Title , questionId: item.Id }) }>
                   <Text style={styles.text}>{item.Title}</Text>
                 </TouchableOpacity>
               </View>
@@ -111,15 +93,15 @@ class Questions extends Component<IQuestionsProps, IQuestionsState> {
 export default Questions;
 
 const styles = StyleSheet.create({
+  questionContainer: {
+    position: "relative",
+    backgroundColor: "#fff",
+    marginTop: 10
+  },
   item: {
-    borderRadius: 4,
-    borderWidth: 0.5,
-    backgroundColor: "#e6e7ef",
-    borderColor: "#e6e7ef",
     padding: 10,
     marginLeft: 50,
     marginRight: 15,
-    marginBottom: 10,
     height: 80
   },
   text: { color: "#4f603c" }

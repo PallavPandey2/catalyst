@@ -23,7 +23,7 @@ class Loader extends Component<Iprops, {}> {
       <View style={styles.container}>
         <ActivityIndicator
           animating={this.props.animating}
-          color="#bc2b78"
+          color="#17718a"
           size="large"
           style={styles.activityIndicator}
         />
@@ -39,7 +39,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 70
+    marginTop: 20,
+    position: 'absolute',
+    top: '30%',
+    left: '45%'
   },
   activityIndicator: {
     flex: 1,
