@@ -48,4 +48,12 @@ export namespace ViewModels {
     }
 
   }
+  export class User{
+    public UserId: string;
+    public Name: string;
+    constructor(args: any) {
+      this.UserId = args.UserId;
+      this.Name = args.Name;
+    }
+  }
 }

@@ -8,7 +8,8 @@ import {
   ScrollView,
   RefreshControl,
   FlatList,
-  Image
+  Image,
+  Button
 } from "react-native";
 import * as CounterActions from "../redux/counter/actions";
 import { connect } from "react-redux";
@@ -43,7 +44,6 @@ class Question extends Component<IQuestionProps & IQuestionDispatchProps,IQuesti
     };
 
     this.onInputFieldValueChange = this.onInputFieldValueChange.bind(this);
-    this.AddAnswer = this.AddAnswer.bind(this);
   }
 
   componentDidMount() {
@@ -69,15 +69,14 @@ class Question extends Component<IQuestionProps & IQuestionDispatchProps,IQuesti
   }
   onInputFieldValueChange(fieldRef: string, value: string): void {
     var updatedState = {...this.state.newAnswer, [fieldRef]: value};
-    debugger;
     this.setState({
       newAnswer: updatedState
     });
   }
   
-  AddAnswer(){
+  onAnswerAdd(){
     this.setState({ animating: true });
-    DataService.AddNewAnswer(this.state.newAnswer).then((updatedAnswers : Array<ViewModels.Answer>) => {
+    DataService.AddNewAnswer(this.state.question, this.state.newAnswer).then((updatedAnswers : Array<ViewModels.Answer>) => {
       var ques = {...this.state.question, "Answers": updatedAnswers}
       this.setState({
         question: ques,
@@ -85,6 +84,11 @@ class Question extends Component<IQuestionProps & IQuestionDispatchProps,IQuesti
         animating: false
       })
     });
+  }
+
+  handleOnLike(){
+    debugger;
+    DataService.LikeAQuestion(this.state.question);
   }
 
   static navigationOptions = ({ navigation }) => ({
@@ -104,12 +108,17 @@ class Question extends Component<IQuestionProps & IQuestionDispatchProps,IQuesti
           <View style={styles.questionContainer}>
             {this.state.animating && <Loader animating={this.state.animating} />}
             <Text>
-              {this.state.question.Id > 0 && this.state.question.Title}
+              {this.state.question.Id > 0 && this.state.question.Title} {this.state.question.Likes}
             </Text>
+            <Button onPress={this.handleOnLike.bind(this)} 
+                title="Like"
+                color="#17718a" />
           </View>
           <View style={styles.newAnswerContainer}>
             <TextInput {...this.state.newAnswer} multiline={true} value={this.state.newAnswer.Answer} onChangeText={(val) => this.onInputFieldValueChange('Answer', val)}  editable = {true} maxLength = {40} placeholder="Title"/>
-          </View>
+            <Button onPress={this.onAnswerAdd.bind(this)} 
+                title="Add Answer"
+                color="#17718a" /></View>
           <FlatList
             style={styles.answerContainer}
             data={this.state.question.Answers}

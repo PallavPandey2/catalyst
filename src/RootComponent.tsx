@@ -11,6 +11,7 @@ import LandingPage from "./containers/LnadingPage";
 import Home from "./containers/Home";
 import Question from "./containers/Question";
 import AddQuestion from "./containers/AddQuestion";
+import DataService from "./Services/DataService";
 
 
 const CLIENT_ID = '62f5b38a-2fdb-46ed-a62c-6639744a46db'
@@ -128,11 +129,12 @@ class RootComponent extends Component<IProps, IState> {
     })
     .then(res => res.json())
     .then(user => {
-      console.log(user)
-      this.setState({
-        displayType : 'after_login',
-        info : user.displayName
-      })
+        DataService.updateUserData(user);
+        console.log(user)
+        this.setState({
+            displayType : 'after_login',
+            info : user.displayName
+        })
     })
   }
 }

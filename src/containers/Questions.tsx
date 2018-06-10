@@ -28,6 +28,7 @@ interface IQuestionsDispatchProps {}
 
 interface IQuestionsState {
   Questions: Array<ViewModels.Question>;
+  refreshing: boolean;
 }
 
 class Questions extends Component<IQuestionsProps, IQuestionsState> {
@@ -35,15 +36,31 @@ class Questions extends Component<IQuestionsProps, IQuestionsState> {
     super(props);
     this.state = {
       Questions: props.questions,
+      refreshing: false
     };
   }
-  
+  onRefresh() {
+    this.setState({ refreshing: true });
+    DataService.GetQuestions().then(questions => {
+      this.setState({
+        Questions: questions,
+        refreshing: false
+      });
+    });
+  }
   addQuestion() {}
   render() {
     return (
       <View style={{ width: "100%" }}>
-        <ScrollView>
-          {this.state.Questions.map(
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh.bind(this)}
+            />
+          }
+        >
+          {this.state.Questions.length > 0 && this.state.Questions.map(
             (item: ViewModels.Question, index: number) => (
               <View style={ styles.questionContainer} key={index}>
                 <Text style={{ position: "absolute", top: 15, left: 5 }}>
@@ -61,6 +78,7 @@ class Questions extends Component<IQuestionsProps, IQuestionsState> {
                     top: 15,
                     left: 25
                   }}
+                  
                 />
                 <Text style={{ position: "absolute", top: 45, left: 5 }}>
                   {item.AnswersCount}
